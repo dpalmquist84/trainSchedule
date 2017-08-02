@@ -15,16 +15,18 @@ var database = firebase.database();
 
 //Inital Value
 
-trainName = "Train";
-final = "TBD";
-howOften = "00:00";
-firstTrain = "00:00";
-time = new Date();
-currentTime = time.getHours() + ":" + time.getMinutes();
-
-number = Number();
-arrivalInt = parseInt(time.getMinutes());
+var trainName = "Train";
+var final = "TBD";
+var howOften = "00:00";
+var firstTrain = "00:00";
+var time = new Date();
+var currentTime = time.getHours() + ":" + time.getMinutes();
+var howOftenInt = parseInt(howOften);
+var number = Number();
+var arrivalInt = parseInt(time.getMinutes());
 console.log(arrivalInt);
+var arrival = (howOftenInt - arrivalInt) * (-1);
+console.log(arrival);
 
 
 
@@ -36,15 +38,15 @@ $(".time").html("The current time is: " + currentTime);
 $("#submit").on("click", function(){
   event.preventDefault();
 
-  var trainName = $("#train-form").val().trim();
-  var final = $("#destination-form").val().trim();
-  var howOften = $("#frequency-form").val().trim();
-  var howOftenInt = parseInt(howOften);
-  var firstTrain = $("#firstTrain-form").val().trim();
+  trainName = $("#train-form").val().trim();
+  final = $("#destination-form").val().trim();
+  howOften = $("#frequency-form").val().trim();
+  howOftenInt = parseInt(howOften);
+  firstTrain = $("#firstTrain-form").val().trim();
   console.log(firstTrain);
   arrivalInt = parseInt(time.getMinutes());
   console.log(arrivalInt);
-  var arrival = arrivalInt - howOftenInt;
+  arrival = arrivalInt - howOftenInt;
   console.log(arrival);
 
   time = new Date();
@@ -53,7 +55,7 @@ $("#submit").on("click", function(){
 
 
     
-  database.ref().push({
+  database.ref().set({
     trainName : trainName,
     final : final,
     howOftenInt : howOftenInt,
@@ -63,12 +65,6 @@ $("#submit").on("click", function(){
 
   })
 
-      $("#train-display").append("<p>" + trainName);
-      $("#destination-display").append("<p>" + final);
-      $("#frequency-display").append("<p>" + howOftenInt);
-      $("#nextArrival-display").append("<p>" + firstTrain);
-      $("#minAway-display").append("<p>" + arrival)
-      console.log(arrival);
 
 
 });
@@ -77,11 +73,11 @@ $("#submit").on("click", function(){
 
        
 
-         // $("#train").append("<p>" + trainName);
-         // $("#destination").append("<p>" + final);
-         // $("#frequency").append("<p>" + howOften);
-         // $("#minAway").append("<p>" + firstTrain);
-         // $("#nextArrival").append("<p>" + arrival);
+         $("#train-display").append("<p>" + snapshot.val().trainName);
+         $("#destination-display").append("<p>" + snapshot.val().final);
+         $("#frequency-display").append("<p>" + howOften + " minutes");
+         $("#minAway-display").append("<p>" + arrival + " minutes");
+         $("#nextArrival-display").append("<p>" + firstTrain);
     
 
 
