@@ -4,3 +4,10 @@
 .panel-title {
 	text-align: center;
 }
+h4 {
+	text-align: center;
+}
+
+p {
+	border: solid gray 1px;
+}

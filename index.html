@@ -33,7 +33,7 @@
 
   <link href="https://fonts.googleapis.com/css?family=Indie+Flower|Satisfy" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Indie+Flower|Rajdhani|Satisfy" rel="stylesheet">
-  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+  
 
 
 </head>
@@ -48,24 +48,25 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title">Current train schedule</h3>
+        <h4 class="time"></h4>
     </div>
   <div class="row">
     <div class="col lg-1 col-md-1 col-sm12 col-xs-12">
    
     </div>
-    <div class="col lg-2 col-md-2 col-sm12 col-xs-12" id="train">
+    <div class="col lg-2 col-md-2 col-sm12 col-xs-12" id="train-display">
     Train Name
     </div>
-      <div class="col lg-2 col-md-2 col-sm12 col-xs-12" id="destination">
+      <div class="col lg-2 col-md-2 col-sm12 col-xs-12" id="destination-display">
     Destination
     </div>
-      <div class="col lg-2 col-md-2 col-sm12 col-xs-12" id="frequency">
+      <div class="col lg-2 col-md-2 col-sm12 col-xs-12" id="frequency-display">
     Frequency (min)
     </div>
-      <div class="col lg-2 col-md-2 col-sm12 col-xs-12" id="nextArrival">
+      <div class="col lg-2 col-md-2 col-sm12 col-xs-12" id="nextArrival-display">
     Next Arrival
     </div>
-      <div class="col lg-2 col-md-2 col-sm12 col-xs-12" id="minAway">
+      <div class="col lg-2 col-md-2 col-sm12 col-xs-12" id="minAway-display">
     Minutes Away
     </div>
     
@@ -79,16 +80,16 @@
       </div>
   
     <span><p>Train Name</p></span>
-      <input type="text" class="form-control" placeholder="Train Name" aria-describedby="basic-addon2" id="trainName">
+      <input type="text" class="form-control" placeholder="Train Name" aria-describedby="basic-addon2" id="train-form">
 
     <span><p>Destination</p></span>
-      <input type="text" class="form-control" placeholder="Destination" aria-describedby="basic-addon2" id="finalDestination">
+      <input type="text" class="form-control" placeholder="Destination" aria-describedby="basic-addon2" id="destination-form">
 
     <span><p>Frequency</p></span>
-      <input type="text" class="form-control" placeholder="Frequency" aria-describedby="basic-addon2" id="howOften">
+      <input type="number" class="form-control" placeholder="Frequency" aria-describedby="basic-addon2" id="frequency-form">
 
     <span><p>First Train Time</p></span>
-      <input type="text" class="form-control" placeholder="First Train Time" aria-describedby="basic-addon2" id="firstTrain">
+      <input type="time" class="form-control" placeholder="First Train Time" aria-describedby="basic-addon2" id="firstTrain-form">
     <button type="submit" id="submit">Submit</button>
 
     </div>

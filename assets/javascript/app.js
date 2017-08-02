@@ -11,32 +11,85 @@ $(document).ready(function(){
   };
   firebase.initializeApp(config);
 
-var database =firebase.database();
+var database = firebase.database();
 
 //Inital Value
 
-trainName = "";
-finalDestination = "";
-howOften = 0;
-firstTrain = 0;
+trainName = "Train";
+final = "TBD";
+howOften = "00:00";
+firstTrain = "00:00";
+time = new Date();
+currentTime = time.getHours() + ":" + time.getMinutes();
+
+number = Number();
+arrivalInt = parseInt(time.getMinutes());
+console.log(arrivalInt);
+
+
+
+
+$(".time").html("The current time is: " + currentTime);
+
+
 
 $("#submit").on("click", function(){
+  event.preventDefault();
 
-  var trainName = $("#trainName").val().trim();
-  var finalDestination = $("#finalDestination").val().trim();
-  var howOften = $("#howOften").val().trim();
-  var firstTrain = $("#firstTrain").val().trim();
+  var trainName = $("#train-form").val().trim();
+  var final = $("#destination-form").val().trim();
+  var howOften = $("#frequency-form").val().trim();
+  var howOftenInt = parseInt(howOften);
+  var firstTrain = $("#firstTrain-form").val().trim();
+  console.log(firstTrain);
+  arrivalInt = parseInt(time.getMinutes());
+  console.log(arrivalInt);
+  var arrival = arrivalInt - howOftenInt;
+  console.log(arrival);
 
-  database.ref().set({
+  time = new Date();
+  currentTime = time.getHours() + ":" + time.getMinutes();
+  $(".time").html("The current time is: " + currentTime);
+
+
+    
+  database.ref().push({
     trainName : trainName,
-    finalDestination : finalDestination,
-    howOften : howOften,
-    firstTrain : firstTrain
+    final : final,
+    howOftenInt : howOftenInt,
+    firstTrain : firstTrain,
+    arrival : arrival
+
 
   })
 
-  $("#train").append("<p>" + trainName);
+      $("#train-display").append("<p>" + trainName);
+      $("#destination-display").append("<p>" + final);
+      $("#frequency-display").append("<p>" + howOftenInt);
+      $("#nextArrival-display").append("<p>" + firstTrain);
+      $("#minAway-display").append("<p>" + arrival)
+      console.log(arrival);
+
+
 });
+
+    database.ref().on("value", function(snapshot) {
+
+       
+
+         // $("#train").append("<p>" + trainName);
+         // $("#destination").append("<p>" + final);
+         // $("#frequency").append("<p>" + howOften);
+         // $("#minAway").append("<p>" + firstTrain);
+         // $("#nextArrival").append("<p>" + arrival);
+    
+
+
+
+      // Handle the errors
+    }, function(errorObject) {
+      console.log("Errors handled: " + errorObject.code);
+    });
 
 })
 
