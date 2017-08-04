@@ -50,17 +50,29 @@ $("#submit").on("click", function(){
   console.log(arrival);
 
   time = new Date();
-  currentTime = time.getHours() + ":" + time.getMinutes();
+  currentTime = moment();
   $(".time").html("The current time is: " + currentTime);
 
+/*
+  //logic for arrival time
+  noTrains = currentTime - firstTrain;
+  
+  if (noTrains % howOftenInt === 0){
+    $("#minAway-display").append("<p>" + "Train is here")
+  } else {
+  // X minutes away
+  }
+
+*/
 
     
-  database.ref().set({
+  database.ref().push({
     trainName : trainName,
     final : final,
     howOftenInt : howOftenInt,
     firstTrain : firstTrain,
-    arrival : arrival
+    dateAdded: firebase.database.ServerValue.TIMESTAMP
+   
 
 
   })
@@ -69,7 +81,7 @@ $("#submit").on("click", function(){
 
 });
 
-    database.ref().on("value", function(snapshot) {
+    database.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function(snapshot) {
 
        
 
