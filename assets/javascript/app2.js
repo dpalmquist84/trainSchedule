@@ -40,6 +40,8 @@ $("#submit").on("click", function(){
   trainName = $("#train-form").val().trim();
   final = $("#destination-form").val().trim();
   howOften = $("#frequency-form").val().trim();
+  howOften = moment(howOften).format("LT");
+  console.log(howOften);
   howOftenInt = parseInt(howOften);
   firstTrain = $("#firstTrain-form").val().trim();
   console.log(firstTrain);
@@ -47,9 +49,10 @@ $("#submit").on("click", function(){
   console.log(arrivalInt);
   arrival = arrivalInt - howOftenInt;
   console.log(arrival);
-
-  time = new Date();
   $(".time").html("The current time is: " + currentTime);
+
+
+  console.log(duration);
 
 
     

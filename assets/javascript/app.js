@@ -20,7 +20,7 @@ var final = "TBD";
 var howOften = "00:00";
 var firstTrain = "00:00";
 var time = new Date();
-var currentTime = time.getHours() + ":" + time.getMinutes();
+var currentTime = moment().format("hh:mm")
 var howOftenInt = parseInt(howOften);
 var number = Number();
 var arrivalInt = parseInt(time.getMinutes());
@@ -41,44 +41,54 @@ $("#submit").on("click", function(){
   trainName = $("#train-form").val().trim();
   final = $("#destination-form").val().trim();
   howOften = $("#frequency-form").val().trim();
-  howOftenInt = parseInt(howOften);
+  // howOftenInt = parseInt(howOften);
+  howOftenTime = moment(howOften, "hh:mm");
   firstTrain = $("#firstTrain-form").val().trim();
-  console.log(firstTrain);
-  arrivalInt = parseInt(time.getMinutes());
-  console.log(arrivalInt);
+  
   arrival = arrivalInt - howOftenInt;
-  console.log(arrival);
 
-  time = new Date();
-  currentTime = time.getHours() + ":" + time.getMinutes();
+  var firstTrainTime = moment(firstTrain, "hh:mm");
+  var firstTrainHours = firstTrainTime.hour() + ":" + firstTrainTime.minutes();
+  
+  var duration = moment().subtract(firstTrainTime, howOftenTime).format("hh:mm");
+  console.log(duration);
+  var durationTime = duration.hour() + ":" + duration.minutes();
+  console.log(durationTime)
+
+
+ 
   $(".time").html("The current time is: " + currentTime);
 
 
+
     
-  database.ref().set({
+  database.ref().push({
     trainName : trainName,
     final : final,
     howOftenInt : howOftenInt,
     firstTrain : firstTrain,
-    arrival : arrival
+    dateAdded: firebase.database.ServerValue.TIMESTAMP
 
-
-  })
+     })
 
 
 
 });
 
-    database.ref().on("value", function(snapshot) {
+    database.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function(snapshot) {
 
        
 
          $("#train-display").append("<p>" + snapshot.val().trainName);
          $("#destination-display").append("<p>" + snapshot.val().final);
-         $("#frequency-display").append("<p>" + howOften + " minutes");
+         $("#frequency-display").append("<p>" + howOftenInt + " minutes");
          $("#minAway-display").append("<p>" + arrival + " minutes");
-         $("#nextArrival-display").append("<p>" + firstTrain);
-    
+         $("#nextArrival-display").append("<p>" + arrival);
+
+         $("#train-form").val("");
+         $("#destination-form").val("");
+         $("#frequency-form").val(" ");
+         $("#firstTrain-form").val(" ");
 
 
 
