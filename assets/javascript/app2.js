@@ -20,12 +20,13 @@ var final = "TBD";
 var howOften = "00:00";
 var firstTrain = "00:00";
 var time = new Date();
-var currentTime = moment().format("hh:mm");
+var currentTime = time.getHours() + ":" + time.getMinutes();
 var howOftenInt = parseInt(howOften);
+var number = Number();
 var arrivalInt = parseInt(time.getMinutes());
+console.log(arrivalInt);
 var arrival = (howOftenInt - arrivalInt) * (-1);
-
-
+console.log(arrival);
 
 
 
@@ -40,8 +41,6 @@ $("#submit").on("click", function(){
   trainName = $("#train-form").val().trim();
   final = $("#destination-form").val().trim();
   howOften = $("#frequency-form").val().trim();
-  howOften = moment(howOften).format("LT");
-  console.log(howOften);
   howOftenInt = parseInt(howOften);
   firstTrain = $("#firstTrain-form").val().trim();
   console.log(firstTrain);
@@ -49,20 +48,19 @@ $("#submit").on("click", function(){
   console.log(arrivalInt);
   arrival = arrivalInt - howOftenInt;
   console.log(arrival);
+
+  time = new Date();
+  currentTime = time.getHours() + ":" + time.getMinutes();
   $(".time").html("The current time is: " + currentTime);
 
 
-  console.log(duration);
-
-
     
-  database.ref().push({
+  database.ref().set({
     trainName : trainName,
     final : final,
     howOftenInt : howOftenInt,
     firstTrain : firstTrain,
-    dateAdded: firebase.database.ServerValue.TIMESTAMP
-    
+    arrival : arrival
 
 
   })
@@ -71,7 +69,7 @@ $("#submit").on("click", function(){
 
 });
 
-     database.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function(snapshot) {
+    database.ref().on("value", function(snapshot) {
 
        
 
