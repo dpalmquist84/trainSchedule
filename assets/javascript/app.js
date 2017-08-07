@@ -42,30 +42,29 @@ $("#submit").on("click", function(){
   final = $("#destination-form").val().trim();
   howOften = $("#frequency-form").val().trim();
   // howOftenInt = parseInt(howOften);
-  howOftenTime = moment(howOften, "hh:mm");
+  howOftenTime = moment(howOften, "HH:mm");
   firstTrain = $("#firstTrain-form").val().trim();
   
-  arrival = arrivalInt - howOftenInt;
+  
 
-  var firstTrainTime = moment(firstTrain, "hh:mm");
+  var firstTrainTime = moment(firstTrain, "HH:mm");
   var firstTrainHours = firstTrainTime.hour() + ":" + firstTrainTime.minutes();
   
-  var duration = moment().subtract(firstTrainTime, howOftenTime).format("hh:mm");
-  console.log(duration);
-  var durationTime = duration.hour() + ":" + duration.minutes();
-  console.log(durationTime)
-
-
+  var arrivalMinutes = moment().minutes();
+  console.log(arrivalMinutes);
+ 
+  var arrival = moment().add(howOften, 'minutes');
+  console.log(arrival);
  
   $(".time").html("The current time is: " + currentTime);
 
 
 
     
-  database.ref().push({
+  database.ref().set({
     trainName : trainName,
     final : final,
-    howOftenInt : howOftenInt,
+    howOften : howOften,
     firstTrain : firstTrain,
     dateAdded: firebase.database.ServerValue.TIMESTAMP
 
@@ -81,7 +80,7 @@ $("#submit").on("click", function(){
 
          $("#train-display").append("<p>" + snapshot.val().trainName);
          $("#destination-display").append("<p>" + snapshot.val().final);
-         $("#frequency-display").append("<p>" + howOftenInt + " minutes");
+         $("#frequency-display").append("<p>" + howOften + " minutes");
          $("#minAway-display").append("<p>" + arrival + " minutes");
          $("#nextArrival-display").append("<p>" + arrival);
 
